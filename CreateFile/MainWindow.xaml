@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CreateFile"
         mc:Ignorable="d"
         Title="CreateFile" Height="300" Width="200">
-    <Grid Margin="20,20,20,20">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -27,18 +27,18 @@
                 Grid.ColumnSpan="2" 
                 Click="button_Click" 
                 Background="#FFDF4D4D" 
-                IsDefault="True"/>
+                 IsDefault="True"/>
         <TextBox x:Name="textBox" 
                  Grid.ColumnSpan="2" 
                  HorizontalAlignment="Center" 
                  Text="" 
                  VerticalAlignment="Center" 
-                 Width="140" 
+                 Width="182" 
                  Height="80" 
-                 Grid.Row="1" Margin="2,0,0,0"/>
+                 Grid.Row="1"/>
         <Label x:Name="label" 
                Content="名称用逗号或空格分隔" 
-               HorizontalAlignment="Left" 
+               HorizontalAlignment="Center" 
                Margin="10,0,0,0" 
                VerticalAlignment="Center" 
                Grid.ColumnSpan="2" 
