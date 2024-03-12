@@ -24,47 +24,35 @@ namespace CreateFile
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            // 获取文本框中输入的名字
-            string name = textBox.Text;
+            // 获取用户输入的所有文件夹名称
+            string[] folderNames = textBox.Text.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            // 判断名字是否为空或无效
-            if (string.IsNullOrEmpty(name) || name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            // 获取程序所在目录的完整路径
+            string programPath = Environment.CurrentDirectory;
+
+            foreach (var name in folderNames)
             {
-                // 显示错误信息
-                MessageBox.Show("请输入有效的名字", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                // 获取程序所在目录的完整路径
-                string programPath = Environment.CurrentDirectory;
+                // 检查名称是否有效
+                if (string.IsNullOrEmpty(name) || name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                {
+                    MessageBox.Show($"无效的文件夹名称: {name}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    continue;
+                }
 
                 // 拼接文件夹的完整路径
-                string folderPath = Path.Combine(programPath, name);
+                string folderPath = Path.Combine(programPath, name.Trim());
 
-                // 判断文件夹是否已经存在
-                if (Directory.Exists(folderPath))
+                // 创建文件夹
+                if (!Directory.Exists(folderPath))
                 {
-                    // 显示提示信息
-                    MessageBox.Show("该文件夹已经存在", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Directory.CreateDirectory(folderPath);
+                    MessageBox.Show($"文件夹 '{name}' 创建成功！", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    // 尝试创建文件夹
-                    try
-                    {
-                        // 调用 Directory.CreateDirectory 方法创建文件夹
-                        Directory.CreateDirectory(folderPath);
-
-                        // 显示成功信息
-                        MessageBox.Show("文件夹创建成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        // 显示异常信息
-                        MessageBox.Show(ex.Message, "异常", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    MessageBox.Show($"文件夹 '{name}' 已存在。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }
     }
-}
+} 
